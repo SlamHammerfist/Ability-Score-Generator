@@ -14,7 +14,7 @@ Hooks.on("renderActorDirectory", (app, htmlElement) => {
   assignButton.on("click", async () => {
     const selected = canvas.tokens.controlled[0]?.actor ?? game.user.character;
     if (!selected || selected.type !== "character") {
-      return ui.notifications.warn("Select a character token or open your character sheet first.");
+      return ui.notifications.warn("Assign or Select a character token first.");
     }
     openAbilityDialog(selected);
   });
@@ -25,4 +25,5 @@ Hooks.on("renderActorDirectory", (app, htmlElement) => {
   } else {
     headerActions.append(assignButton);
   }
+
 });
