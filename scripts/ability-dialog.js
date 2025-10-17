@@ -22,7 +22,7 @@ export async function openAbilityDialog(actor) {
   `;
 
   const dialog = new Dialog({
-    title: "Assign Ability Scores",
+    title: `Assign Ability Scores — ${actor.name}`,
     content: html,
     buttons: {},
     classes: ["ability-gen-dialog"]
@@ -34,6 +34,16 @@ export async function openAbilityDialog(actor) {
   dialog.render(true);
 
   Hooks.once("renderDialog", (dialogInstance, $html) => {
+    const dialogEl = $html[0]?.closest(".app");
+    const closeButton = dialogEl?.querySelector(".window-header .close");
+    if (closeButton) {
+      for (const node of closeButton.childNodes) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          closeButton.removeChild(node);
+        }
+      }
+    }
+    
     const form = $html.find("form")[0];
     const tableWrapper = $html.find("#ability-gen-table")[0];
     const modeSelector = $html.find("#ability-gen-mode");
