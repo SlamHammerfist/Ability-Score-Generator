@@ -1,0 +1,31 @@
+{
+  "id": "ability-gen",
+  "title": "Ability Score Generator",
+  "description": "Adds a stat generation button to DnD5e character sheets with support for rolling, point buy, and standard array.",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Slam Hammerfist",
+      "flags": {}
+    }
+  ],
+  "compatibility": {
+    "minimum": "12",
+    "verified": "13"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system"
+      }
+    ]
+  },
+  "esmodules": ["scripts/ability-gen.js"],
+  "styles": ["styles/ability-gen.css"],
+  "url": "https://github.com/SlamHammerfist/Ability-Score-Generator",
+  "manifest": "https://raw.githubusercontent.com/SlamHammerfist/Ability-Score-Generator/refs/heads/main/module.json",
+  "download": "https://github.com/SlamHammerfist/Ability-Score-Generator/archive/refs/heads/main.zip"
+}
+
+
