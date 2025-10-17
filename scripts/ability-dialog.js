@@ -79,13 +79,21 @@ export async function openAbilityDialog(actor) {
     modeSelector.on("change", () => {
       updateRollVisibility();
       const mode = modeSelector.val();
-      if (mode === "roll") {
-        renderAssignmentTable(tableWrapper, abilities, rolledScores, "roll");
-      } else if (mode === "array") {
-        renderAssignmentTable(tableWrapper, abilities, [15, 14, 13, 12, 10, 8], "array");
-      } else {
-        renderAssignmentTable(tableWrapper, abilities, Array.from({ length: 8 }, (_, i) => i + 8), "buy");
+
+      // Clear all selections and modifier previews
+      for (const input of form.querySelectorAll("select[name]")) {
+        input.value = "";
       }
+      for (const mod of form.querySelectorAll(".mod-preview")) {
+        mod.textContent = "";
+      }
+
+      // Rerender with fresh source
+      const source = mode === "roll" ? rolledScores
+                   : mode === "array" ? [15, 14, 13, 12, 10, 8]
+                   : Array.from({ length: 8 }, (_, i) => i + 8);
+
+      renderAssignmentTable(tableWrapper, abilities, source, mode);
     });
 
     $html.find(".roll-dice-btn").on("click", () => rollScores("Rolled Ability Scores"));
@@ -116,13 +124,24 @@ export async function openAbilityDialog(actor) {
       event.preventDefault();
       const mode = modeSelector.val();
 
-      const scores = abilities.map(a => {
-        const input = form.querySelector(`[name="${a}"]`);
-        return input ? Number(input.value) : undefined;
-      });
+      const scores = [];
+      const missing = [];
 
-      if (scores.some(s => s === undefined || isNaN(s))) {
-        return ui.notifications.error("All abilities must be assigned.");
+      for (const ability of abilities) {
+        const input = form.querySelector(`[name="${ability}"]`);
+        const val = input?.value;
+        const num = Number(val);
+
+        if (!val || isNaN(num)) {
+          missing.push(CONFIG.DND5E.abilities[ability].label);
+          scores.push(undefined);
+        } else {
+          scores.push(num);
+        }
+      }
+
+      if (missing.length > 0) {
+        return ui.notifications.error(`Missing scores for: ${missing.join(", ")}`);
       }
 
       if (mode === "roll") {
@@ -142,10 +161,6 @@ export async function openAbilityDialog(actor) {
       if (mode === "buy") {
         const costTable = { 8: 0, 9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 7, 15: 9 };
         const totalCost = scores.reduce((sum, val) => sum + (costTable[val] ?? 100), 0);
-
-        if (totalCost > 27) {
-          return ui.notifications.error(`Point buy total exceeds 27 (used ${totalCost}).`);
-        }
 
         if (totalCost < 27) {
           const remaining = 27 - totalCost;
