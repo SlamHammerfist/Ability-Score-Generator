@@ -4,20 +4,17 @@ export function renderAssignmentTable(wrapper, abilities, sourceScores, mode) {
   const costTable = { 8: 0, 9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 7, 15: 9 };
   const maxPoints = 27;
 
-  // Track current selections
   const currentSelections = {};
   for (const select of wrapper.querySelectorAll("select")) {
     const val = select.value;
     if (val) currentSelections[select.name] = Number(val);
   }
 
-  // Calculate total cost
   let currentCost = 0;
   for (const val of Object.values(currentSelections)) {
     currentCost += costTable[val] ?? 100;
   }
 
-  // Count available scores (for roll/array modes)
   const scoreCounts = {};
   for (const score of sourceScores) {
     scoreCounts[score] = (scoreCounts[score] || 0) + 1;
@@ -31,9 +28,8 @@ export function renderAssignmentTable(wrapper, abilities, sourceScores, mode) {
   // Scores to render
   const scoresToRender = mode === "buy"
     ? Array.from({ length: 8 }, (_, i) => i + 8)
-    : sourceScores.slice().sort((a, b) => a - b); // preserve duplicates
+    : sourceScores.slice().sort((a, b) => a - b);
 
-  // Clear and rebuild table
   wrapper.innerHTML = "";
 
   const table = document.createElement("table");
@@ -72,7 +68,7 @@ export function renderAssignmentTable(wrapper, abilities, sourceScores, mode) {
 
     const scorePool = scoresToRender.slice();
     if (selected !== undefined && !scorePool.includes(selected)) {
-      scorePool.unshift(selected); // ensure current selection is preserved
+      scorePool.unshift(selected);
     }
 
     const scoreUsage = {};
@@ -119,4 +115,5 @@ export function renderAssignmentTable(wrapper, abilities, sourceScores, mode) {
 function formatModifier(score) {
   const mod = Math.floor((score - 10) / 2);
   return mod >= 0 ? `+${mod}` : `${mod}`;
+
 }
