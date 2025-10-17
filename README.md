@@ -27,3 +27,6 @@ A modular, native-feeling ability score assignment tool for FoundryVTT. Supports
 
 Click the "Assign Abilities" button on any actor sheet to open the dialog. Choose a generation mode, assign scores, and click Apply.
 
+## AI Usage
+
+Copilot was used to generate code with extensive input and testing from myself.
