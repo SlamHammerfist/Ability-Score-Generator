@@ -21,8 +21,9 @@ A modular, native-feeling ability score assignment tool for FoundryVTT. Supports
 1. Manually add the manifest to FoundryVTT:
    ```json
    https://raw.githubusercontent.com/SlamHammerfist/Ability-Score-Generator/refs/heads/main/module.json
-2. Enable Effect Select in your FoundryVTT world.
+2. Enable Ability Score Generator in your FoundryVTT world.
 
 ## Usage
 
 Click the "Assign Abilities" button on any actor sheet to open the dialog. Choose a generation mode, assign scores, and click Apply.
+
