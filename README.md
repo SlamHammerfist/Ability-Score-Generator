@@ -2,7 +2,7 @@
 
 # Ability Score Generator
 
-A modular, native-feeling ability score assignment tool for FoundryVTT. Supports roll, standard array, and point-buy modes with dynamic validation, modifier previews, and actor-safe updates.
+A modular, native-feeling ability score assignment tool for FoundryVTT and the D&D5e system. Supports roll, standard array, and point-buy modes with dynamic validation, modifier previews, and actor-safe updates.
 
 ![Ability Score Dialog Preview](assets/preview.gif)
 
@@ -38,6 +38,7 @@ Put character sheet into edit mode, click the "Assign Abilities" button in the h
 
 - Upgrade to App v2.
 - Move from header to context menu button.
+
 
 
 
