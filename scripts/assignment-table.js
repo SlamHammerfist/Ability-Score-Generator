@@ -89,7 +89,7 @@ export function renderAssignmentTable(wrapper, abilities, sourceScores, mode) {
       const disabledAttr = mode === "buy" && scoreCost > (maxPoints - currentCost) ? "disabled" : "";
 
       select.innerHTML += `<option value="${score}" ${selectedAttr} ${disabledAttr}>${label}</option>`;
-      if (mode !== "buy") scoreUsage[score]--; // consume one copy
+      if (mode !== "buy") scoreUsage[score]--;
     }
 
     const modCell = document.createElement("td");
@@ -117,3 +117,4 @@ function formatModifier(score) {
   return mod >= 0 ? `+${mod}` : `${mod}`;
 
 }
+
