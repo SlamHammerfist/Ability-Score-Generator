@@ -9,9 +9,10 @@ A modular, native-feeling ability score assignment tool for FoundryVTT and the D
 ## Features
 
 - 🧠 Three generation modes: Roll, Standard Array, Point Buy
-- 🎯 Native UI replication with modifier previews and dropdowns
+- 🎯 Native UI replication with dropdowns and live preview of current, assigned, resulting score, and modifier
 - 🛡️ Point-buy enforcement with confirmation dialog for unspent points
 - 🔄 Reset and reroll support
+
 
 ## Compatibility
 
@@ -42,8 +43,3 @@ Put character sheet into edit mode, click the "Assign Abilities" button in the h
 ## AI Usage
 
 Copilot was used to generate code with extensive input and testing from myself.
-
-
-
-
-

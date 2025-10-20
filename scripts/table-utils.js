@@ -19,7 +19,7 @@ export function renderAssignmentTable(wrapper, abilities, source, mode, actor) {
     <tbody>
       ${abilities.map(ability => {
         const label = CONFIG.DND5E.abilities[ability]?.label ?? ability.toUpperCase();
-        const current = getProperty(actor.system, `abilities.${ability}.value`) ?? 0;
+        const current = foundry.utils.getProperty(actor.system, `abilities.${ability}.value`) ?? 0;
         const options = buildScoreOptions(source, mode);
 
         return `
@@ -124,7 +124,7 @@ export function wireScoreListeners(html, modeSelector, actor, abilities, rolledS
       const row = select.closest("tr");
       const ability = row?.dataset.ability;
       const assigned = parseInt(select.value);
-      const current = getProperty(actor.system, `abilities.${ability}.value`) ?? 0;
+      const current = foundry.utils.getProperty(actor.system, `abilities.${ability}.value`) ?? 0;
 
       const result = isNaN(assigned)
         ? current

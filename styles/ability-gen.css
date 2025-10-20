@@ -1,4 +1,6 @@
-/* Assign Abilities header button */
+/* ────────────────────────────────
+   Assign Abilities header button
+──────────────────────────────── */
 .assign-abilities-btn {
   display: inline-flex;
   align-items: center;
@@ -9,6 +11,7 @@
   background: #00000040;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .assign-abilities-btn:hover {
@@ -21,14 +24,18 @@
   pointer-events: none;
 }
 
-/* Dialog layout */
+/* ────────────────────────────────
+   Dialog layout
+──────────────────────────────── */
 .ability-gen-dialog {
   font-family: var(--font-primary);
   font-size: var(--font-size-14);
   max-width: 900px;
 }
 
-/* Mode selector row */
+/* ────────────────────────────────
+   Mode selector row
+──────────────────────────────── */
 .ability-gen-dialog .mode-row {
   display: flex;
   align-items: center;
@@ -40,7 +47,9 @@
   font-weight: bold;
 }
 
-/* Ability table */
+/* ────────────────────────────────
+   Ability table
+──────────────────────────────── */
 .ability-gen-table {
   width: 100%;
   border-collapse: collapse;
@@ -59,18 +68,26 @@
   border-bottom: 1px solid var(--color-border-light-2);
 }
 
+.ability-gen-table tbody tr:hover {
+  background-color: var(--color-bg-hover);
+}
+
 .ability-gen-table .score-cell select {
   width: 6em;
   max-width: 100%;
 }
 
-/* Modifier preview */
+/* ────────────────────────────────
+   Modifier preview
+──────────────────────────────── */
 .result-score,
 .mod-preview {
   font-weight: bold;
 }
 
-/* Footer buttons */
+/* ────────────────────────────────
+   Footer buttons
+──────────────────────────────── */
 .ability-gen-dialog .dialog-buttons {
   display: flex;
   justify-content: flex-end;

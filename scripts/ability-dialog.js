@@ -1,6 +1,5 @@
-import { rollScores, applyScores } from "./score-handler.js";
+import { rollScores, applyScores, getModifier } from "./score-handler.js";
 import { renderAssignmentTable, wireScoreListeners } from "./table-utils.js";
-import { getModifier } from "./score-handler.js";
 
 export class AbilityDialog extends Application {
   constructor(actor) {
@@ -19,6 +18,13 @@ export class AbilityDialog extends Application {
     this._onActorUpdate = null;
   }
 
+  static show(actor) {
+    const existing = Array.from(Foundry.applications.instances.values())
+      .find(app => app instanceof AbilityDialog && app.actor?.id === actor.id);
+
+    if (!existing) new AbilityDialog(actor).render(true);
+  }
+
   getData() {
     return {
       abilities: this.abilities,
@@ -28,11 +34,13 @@ export class AbilityDialog extends Application {
 
   activateListeners(html) {
     const tableWrapper = html[0].querySelector("#ability-gen-table");
-    const modeSelector = html.find("#ability-gen-mode");
-    const rollButton = html.find(".roll-btn");
+    const modeSelector = html.find("#ability-gen-mode")[0];
+    const rollButton = html[0].querySelector(".roll-btn");
 
     const updateRollVisibility = () => {
-      rollButton.toggle(modeSelector.val() === "roll");
+      if (rollButton) {
+        rollButton.style.display = modeSelector.value === "roll" ? "inline-block" : "none";
+      }
     };
 
     const renderTableWithMode = mode => {
@@ -43,18 +51,18 @@ export class AbilityDialog extends Application {
       renderAssignmentTable(tableWrapper, this.abilities, source, mode, this.actor);
 
       setTimeout(() => {
-        wireScoreListeners(html, modeSelector, this.actor, this.abilities, this.rolledScores);
+        wireScoreListeners(html, $(modeSelector), this.actor, this.abilities, this.rolledScores);
       }, 0);
     };
 
-    modeSelector.on("change", () => {
+    modeSelector.addEventListener("change", () => {
       updateRollVisibility();
-      renderTableWithMode(modeSelector.val());
+      renderTableWithMode(modeSelector.value);
     });
 
-    rollButton.on("click", async () => {
+    rollButton?.addEventListener("click", async () => {
       this.rolledScores = await rollScores(this.actor);
-      modeSelector.val("roll");
+      modeSelector.value = "roll";
       updateRollVisibility();
       renderTableWithMode("roll");
     });
@@ -63,12 +71,12 @@ export class AbilityDialog extends Application {
       html.find("select[name]").each((_, select) => {
         select.value = "";
       });
-      renderTableWithMode(modeSelector.val());
+      renderTableWithMode(modeSelector.value);
     });
 
     html.find(".apply-btn").on("click", async event => {
       event.preventDefault();
-      const success = await applyScores(this.actor, this.abilities, html, modeSelector.val(), this.rolledScores);
+      const success = await applyScores(this.actor, this.abilities, html, modeSelector.value, this.rolledScores);
       if (success) this.close();
     });
 
@@ -89,7 +97,7 @@ export class AbilityDialog extends Application {
       const row = html.querySelector(`tr[data-ability="${ability}"]`);
       if (!row) continue;
 
-      const current = getProperty(this.actor.system, `abilities.${ability}.value`) ?? 0;
+      const current = foundry.utils.getProperty(this.actor.system, `abilities.${ability}.value`) ?? 0;
       const currentCell = row.querySelector(".current-score");
       if (currentCell) currentCell.textContent = current;
 
