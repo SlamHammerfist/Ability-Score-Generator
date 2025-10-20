@@ -20,6 +20,10 @@ A modular, native-feeling ability score assignment tool for FoundryVTT. Supports
 
 ## Installation
 
+1. Download and manually add to modules folder
+
+or
+
 1. Manually add the manifest to FoundryVTT:
    ```json
    https://raw.githubusercontent.com/SlamHammerfist/Ability-Score-Generator/refs/heads/main/module.json
@@ -34,6 +38,7 @@ Put character sheet into edit mode, click the "Assign Abilities" button in the h
 
 - Upgrade to App v2.
 - Move from header to context menu button.
+
 
 
 
