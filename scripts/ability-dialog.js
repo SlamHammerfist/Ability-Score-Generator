@@ -14,7 +14,7 @@ export class AbilityDialog extends Application {
 
     this.actor = actor;
     this.abilities = Object.keys(actor.system.abilities);
-    this.rolledScores = []; // persist until Roll is pressed again
+    this.rolledScores = [];
   }
 
   getData() {
@@ -87,4 +87,5 @@ export class AbilityDialog extends Application {
     updateRollVisibility();
     renderTableWithMode("roll");
   }
+
 }
