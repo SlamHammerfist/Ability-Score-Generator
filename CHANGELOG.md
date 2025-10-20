@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.1] — 2025-10-20
+
+### Fixed
+- Score column width and modifier preview cells now render consistently across modes.
+- Modifier formatting: Ensures consistent +X/-X display across all ability scores.
+
 ## [2.1.0] - 2025-10-20
 
 ### Added
