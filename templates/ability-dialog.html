@@ -1,13 +1,17 @@
 <form>
-  <label for="ability-gen-mode"><strong>Generation Mode:</strong></label>
-  <select id="ability-gen-mode" style="margin-bottom: 1em;">
-    <option value="roll">Roll</option>
-    <option value="array">Standard Array</option>
-    <option value="buy">Point Buy</option>
-  </select>
-  <div id="ability-gen-table" style="margin-bottom: 1em;"></div>
-  <div class="ability-gen-footer-row">
-    <button type="button" class="roll-dice-btn">Roll</button>
+  <div class="mode-row">
+    <label for="ability-gen-mode">Assignment Mode:</label>
+    <select id="ability-gen-mode">
+      <option value="roll">Roll</option>
+      <option value="array">Standard Array</option>
+      <option value="buy">Point Buy</option>
+    </select>
+  </div>
+
+  <div id="ability-gen-table"></div>
+
+  <div class="dialog-buttons">
+    <button type="button" class="roll-btn">Roll</button>
     <button type="button" class="reset-btn">Reset</button>
     <button type="submit" class="apply-btn">Apply</button>
   </div>
