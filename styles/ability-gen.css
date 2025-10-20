@@ -25,51 +25,48 @@
 .ability-gen-dialog {
   font-family: var(--font-primary);
   font-size: var(--font-size-14);
+  max-width: 900px;
 }
 
-.ability-gen-dialog .form-header {
+/* Mode selector row */
+.ability-gen-dialog .mode-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.5em;
   margin-bottom: 0.5em;
 }
 
-.ability-gen-dialog .form-header label {
+.ability-gen-dialog .mode-row label {
   font-weight: bold;
-  margin-right: 0.5em;
 }
 
 /* Ability table */
-.ability-gen-dialog .ability-table {
+.ability-gen-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 0.5em;
 }
 
-.ability-gen-dialog .ability-table th,
-.ability-gen-dialog .ability-table td {
-  padding: 4px 6px;
+.ability-gen-table th,
+.ability-gen-table td {
+  padding: 6px 10px;
+  text-align: center;
   vertical-align: middle;
 }
 
-.ability-gen-dialog .ability-table th {
+.ability-gen-table th {
   font-weight: bold;
   border-bottom: 1px solid var(--color-border-light-2);
 }
 
-.ability-gen-dialog .ability-table td select {
-  width: 100%;
-}
-
-.ability-gen-dialog .score-cell select {
+.ability-gen-table .score-cell select {
   width: 6em;
   max-width: 100%;
 }
 
 /* Modifier preview */
-.ability-gen-dialog .mod-preview {
-  text-align: center;
-  width: 2em;
+.result-score,
+.mod-preview {
   font-weight: bold;
 }
 

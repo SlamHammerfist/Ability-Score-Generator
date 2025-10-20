@@ -1,6 +1,6 @@
 import { costTable, getModifier, getPointCost, getRemainingPoints } from "./score-handler.js";
 
-export function renderAssignmentTable(wrapper, abilities, source, mode) {
+export function renderAssignmentTable(wrapper, abilities, source, mode, actor) {
   wrapper.innerHTML = "";
 
   const table = document.createElement("table");
@@ -10,24 +10,29 @@ export function renderAssignmentTable(wrapper, abilities, source, mode) {
     <thead>
       <tr>
         <th>Ability</th>
+        <th>Current</th>
         <th id="score-header">Score</th>
+        <th>Result</th>
         <th>Modifier</th>
       </tr>
     </thead>
     <tbody>
       ${abilities.map(ability => {
         const label = CONFIG.DND5E.abilities[ability]?.label ?? ability.toUpperCase();
+        const current = getProperty(actor.system, `abilities.${ability}.value`) ?? 0;
         const options = buildScoreOptions(source, mode);
 
         return `
-          <tr>
+          <tr data-ability="${ability}">
             <td class="ability-label">${label}</td>
+            <td class="current-score">${current}</td>
             <td class="score-cell">
               <select name="${ability}" aria-label="Assign score to ${label}">
                 ${options}
               </select>
             </td>
-            <td class="mod-preview"></td>
+            <td class="result-score">—</td>
+            <td class="mod-preview">—</td>
           </tr>
         `;
       }).join("")}
@@ -40,7 +45,7 @@ export function renderAssignmentTable(wrapper, abilities, source, mode) {
   wrapper.appendChild(form);
 }
 
-export function wireScoreListeners(html, modeSelector, rolledScores) {
+export function wireScoreListeners(html, modeSelector, actor, abilities, rolledScores) {
   const formEl = html.find("form")[0];
   if (!formEl) return;
 
@@ -68,10 +73,10 @@ export function wireScoreListeners(html, modeSelector, rolledScores) {
       let pool = [];
 
       if (mode === "roll") {
-        const rolled = rolledScores.reduce((acc, val) => {
+        const rolled = rolledScores?.reduce((acc, val) => {
           acc[val] = (acc[val] || 0) + 1;
           return acc;
-        }, {});
+        }, {}) ?? {};
 
         for (const [scoreStr, count] of Object.entries(rolled)) {
           const score = Number(scoreStr);
@@ -89,7 +94,7 @@ export function wireScoreListeners(html, modeSelector, rolledScores) {
         pool = arraySource
           .filter(score => score === current || !Object.keys(assigned).includes(String(score)))
           .sort((a, b) => a - b);
-}
+      }
 
       else if (mode === "buy") {
         pool = Array.from({ length: 8 }, (_, i) => i + 8);
@@ -116,12 +121,23 @@ export function wireScoreListeners(html, modeSelector, rolledScores) {
 
   for (const select of selects) {
     select.addEventListener("change", () => {
-      const val = select.value;
-      const preview = select.closest("tr")?.querySelector(".mod-preview");
-      if (preview) {
-        const mod = val === "" ? "" : getModifier(Number(val));
-        preview.textContent = mod === "" ? "" : (mod >= 0 ? `+${mod}` : `${mod}`);
-      }
+      const row = select.closest("tr");
+      const ability = row?.dataset.ability;
+      const assigned = parseInt(select.value);
+      const current = getProperty(actor.system, `abilities.${ability}.value`) ?? 0;
+
+      const result = isNaN(assigned)
+        ? current
+        : current <= 10 ? assigned : current + (assigned % 10);
+
+      const mod = isNaN(result) ? "—" : getModifier(result);
+
+      const resultCell = row.querySelector(".result-score");
+      const modCell = row.querySelector(".mod-preview");
+
+      if (resultCell) resultCell.textContent = result;
+      if (modCell) modCell.textContent = mod >= 0 ? `+${mod}` : `${mod}`;
+
       rebuildOptions();
     });
   }

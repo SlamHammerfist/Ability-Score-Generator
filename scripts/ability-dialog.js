@@ -1,5 +1,6 @@
 import { rollScores, applyScores } from "./score-handler.js";
 import { renderAssignmentTable, wireScoreListeners } from "./table-utils.js";
+import { getModifier } from "./score-handler.js";
 
 export class AbilityDialog extends Application {
   constructor(actor) {
@@ -15,6 +16,7 @@ export class AbilityDialog extends Application {
     this.actor = actor;
     this.abilities = Object.keys(actor.system.abilities);
     this.rolledScores = [];
+    this._onActorUpdate = null;
   }
 
   getData() {
@@ -25,7 +27,7 @@ export class AbilityDialog extends Application {
   }
 
   activateListeners(html) {
-    const tableWrapper = html.find("#ability-gen-table")[0];
+    const tableWrapper = html[0].querySelector("#ability-gen-table");
     const modeSelector = html.find("#ability-gen-mode");
     const rollButton = html.find(".roll-btn");
 
@@ -33,28 +35,16 @@ export class AbilityDialog extends Application {
       rollButton.toggle(modeSelector.val() === "roll");
     };
 
-    const onTableRendered = callback => {
-      const observer = new MutationObserver(() => {
-        observer.disconnect();
-        callback();
-      });
-      observer.observe(tableWrapper, { childList: true });
-    };
-
     const renderTableWithMode = mode => {
       const source = mode === "roll" ? this.rolledScores
                    : mode === "array" ? [15, 14, 13, 12, 10, 8]
                    : Array.from({ length: 8 }, (_, i) => i + 8);
 
-      onTableRendered(() => {
-        const formEl = html.find("form")[0];
-        if (!formEl) return;
-        formEl.querySelectorAll("select[name]").forEach(input => input.value = "");
-        formEl.querySelectorAll(".mod-preview").forEach(mod => mod.textContent = "");
-        wireScoreListeners(html, modeSelector, this.rolledScores);
-      });
+      renderAssignmentTable(tableWrapper, this.abilities, source, mode, this.actor);
 
-      renderAssignmentTable(tableWrapper, this.abilities, source, mode);
+      setTimeout(() => {
+        wireScoreListeners(html, modeSelector, this.actor, this.abilities, this.rolledScores);
+      }, 0);
     };
 
     modeSelector.on("change", () => {
@@ -72,8 +62,6 @@ export class AbilityDialog extends Application {
     html.find(".reset-btn").on("click", () => {
       html.find("select[name]").each((_, select) => {
         select.value = "";
-        const preview = select.closest("tr")?.querySelector(".mod-preview");
-        if (preview) preview.textContent = "";
       });
       renderTableWithMode(modeSelector.val());
     });
@@ -84,8 +72,43 @@ export class AbilityDialog extends Application {
       if (success) this.close();
     });
 
+    this._onActorUpdate = (actor, data) => {
+      if (actor.id !== this.actor.id) return;
+      this.updateCurrentScores();
+    };
+
+    Hooks.on("updateActor", this._onActorUpdate);
+
     updateRollVisibility();
     renderTableWithMode("roll");
   }
 
+  updateCurrentScores() {
+    const html = this.element[0];
+    for (const ability of this.abilities) {
+      const row = html.querySelector(`tr[data-ability="${ability}"]`);
+      if (!row) continue;
+
+      const current = getProperty(this.actor.system, `abilities.${ability}.value`) ?? 0;
+      const currentCell = row.querySelector(".current-score");
+      if (currentCell) currentCell.textContent = current;
+
+      const select = row.querySelector(`select[name="${ability}"]`);
+      const assigned = parseInt(select?.value);
+      const result = isNaN(assigned)
+        ? current
+        : current <= 10 ? assigned : current + (assigned % 10);
+      const mod = isNaN(result) ? "—" : getModifier(result);
+
+      const resultCell = row.querySelector(".result-score");
+      const modCell = row.querySelector(".mod-preview");
+      if (resultCell) resultCell.textContent = result;
+      if (modCell) modCell.textContent = mod >= 0 ? `+${mod}` : `${mod}`;
+    }
+  }
+
+  close(...args) {
+    if (this._onActorUpdate) Hooks.off("updateActor", this._onActorUpdate);
+    return super.close(...args);
+  }
 }
