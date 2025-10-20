@@ -39,6 +39,9 @@ Put character sheet into edit mode, click the "Assign Abilities" button in the h
 - Upgrade to App v2.
 - Move from header to context menu button.
 
+## AI Usage
+
+Copilot was used to generate code with extensive input and testing from myself.
 
 
 
