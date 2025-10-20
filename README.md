@@ -29,3 +29,7 @@ A modular, native-feeling ability score assignment tool for FoundryVTT. Supports
 
 
 Put character sheet into edit mode, click the "Assign Abilities" button in the header to open the dialog. Choose a generation mode, assign scores, and click Apply.
+
+## Future Features
+
+Upgrade to App v2
