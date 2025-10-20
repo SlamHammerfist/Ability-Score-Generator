@@ -2,7 +2,7 @@
   "id": "ability-gen",
   "title": "Ability Score Generator",
   "description": "Adds a stat generation button to DnD5e character sheets with support for rolling, point buy, and standard array.",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "authors": [
     {
       "name": "Slam Hammerfist",
@@ -28,3 +28,4 @@
   "download": "https://github.com/SlamHammerfist/Ability-Score-Generator/archive/refs/heads/main.zip"
 
 }
+
