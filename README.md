@@ -2,6 +2,8 @@
 
 A modular, native-feeling ability score assignment tool for FoundryVTT. Supports roll, standard array, and point-buy modes with dynamic validation, modifier previews, and actor-safe updates.
 
+![Assign Abilities Dialog](assets/screenshot.png)
+
 ## Features
 
 - 🧠 Three generation modes: Roll, Standard Array, Point Buy
@@ -25,9 +27,4 @@ A modular, native-feeling ability score assignment tool for FoundryVTT. Supports
 
 ## Usage
 
-Click the "Assign Abilities" button on the actors tab to open the dialog. Choose a generation mode, assign scores, and click Apply. A player character must be assigned or a token selected to work.
-
-## AI Usage
-
-Copilot was used to generate code with extensive input and testing from myself.
-
+Put character sheet into edit mode, click the "Assign Abilities" button in the header to open the dialog. Choose a generation mode, assign scores, and click Apply.

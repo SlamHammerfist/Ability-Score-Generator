@@ -1,12 +1,82 @@
-.ability-gen-footer-row {
-  margin-top: 1em;
+/* Assign Abilities header button */
+.assign-abilities-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: #00000040;
+  border: none;
+  border-radius: 4px;
+}
+
+.assign-abilities-btn:hover {
+  box-shadow: 0 0 6px 2px rgba(151, 54, 52, 0.8);
+}
+
+.assign-abilities-btn i {
+  font-size: 0.9em;
+  color: var(--color-text-light-1);
+  pointer-events: none;
+}
+
+/* Dialog layout */
+.ability-gen-dialog {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-14);
+}
+
+.ability-gen-dialog .form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5em;
+}
+
+.ability-gen-dialog .form-header label {
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+
+/* Ability table */
+.ability-gen-dialog .ability-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5em;
+}
+
+.ability-gen-dialog .ability-table th,
+.ability-gen-dialog .ability-table td {
+  padding: 4px 6px;
+  vertical-align: middle;
+}
+
+.ability-gen-dialog .ability-table th {
+  font-weight: bold;
+  border-bottom: 1px solid var(--color-border-light-2);
+}
+
+.ability-gen-dialog .ability-table td select {
+  width: 100%;
+}
+
+.ability-gen-dialog .score-cell select {
+  width: 6em;
+  max-width: 100%;
+}
+
+/* Modifier preview */
+.ability-gen-dialog .mod-preview {
+  text-align: center;
+  width: 2em;
+  font-weight: bold;
+}
+
+/* Footer buttons */
+.ability-gen-dialog .dialog-buttons {
   display: flex;
   justify-content: flex-end;
   gap: 0.5em;
-}
-
-.roll-dice-btn,
-.apply-btn {
-  padding: 0.4em 0.8em;
-  font-size: 1em;
+  margin-top: 1em;
 }
