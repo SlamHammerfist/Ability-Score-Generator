@@ -1,3 +1,5 @@
+![Downloads](https://img.shields.io/github/downloads/SlamHammerfist/Ability-Score-Generator/total.svg?style=plastic)
+
 # Ability Score Generator
 
 A modular, native-feeling ability score assignment tool for FoundryVTT. Supports roll, standard array, and point-buy modes with dynamic validation, modifier previews, and actor-safe updates.
@@ -32,6 +34,7 @@ Put character sheet into edit mode, click the "Assign Abilities" button in the h
 
 - Upgrade to App v2.
 - Move from header to context menu button.
+
 
 
 
