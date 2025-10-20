@@ -45,4 +45,3 @@
 - Table header with remaining points
 
 - Confirmation dialog for unspent points
-
