@@ -3,7 +3,7 @@
 ## [2.0.1] - 2025-10-19
 
 ###Fixed
--Removed various notes left in code.
+- Removed various notes left in code.
 
 ## [2.0.0] - 2025-10-18
 
@@ -45,3 +45,4 @@
 - Table header with remaining points
 
 - Confirmation dialog for unspent points
+
