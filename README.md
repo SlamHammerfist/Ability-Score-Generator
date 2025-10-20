@@ -7,11 +7,9 @@ A modular, native-feeling ability score assignment tool for FoundryVTT. Supports
 ## Features
 
 - 🧠 Three generation modes: Roll, Standard Array, Point Buy
-- 🧩 Modular architecture with clean separation of UI, logic, and validation
 - 🎯 Native UI replication with modifier previews and dropdowns
 - 🛡️ Point-buy enforcement with confirmation dialog for unspent points
 - 🔄 Reset and reroll support
-- 🧪 Actor-safe updates with fallback detection
 
 ## Compatibility
 
@@ -34,5 +32,6 @@ Put character sheet into edit mode, click the "Assign Abilities" button in the h
 
 - Upgrade to App v2.
 - Move from header to context menu button.
+
 
 
