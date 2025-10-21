@@ -1,0 +1,55 @@
+.assign-abilities .mode-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.assign-abilities #score-table {
+  margin: 0;
+}
+
+.assign-abilities .button-row {
+  margin-top: 0.75em;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5em;
+}
+
+.assign-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5em;
+}
+
+.assign-table th,
+.assign-table td {
+  padding: 4px 6px;
+  text-align: left;
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.assign-table th {
+  font-weight: bold;
+  border-bottom: 1px solid var(--color-border-light-tertiary);
+}
+
+.assign-table .mod-preview {
+  text-align: center;
+  font-weight: bold;
+}
+
+.assign-table select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5em;
+  margin-top: 1em;
+}

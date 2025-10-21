@@ -1,0 +1,19 @@
+<div class="assign-abilities">
+    
+  <div class="mode-row">
+    <label for="mode-select">Mode:</label>
+    <select id="mode-select">
+      <option value="roll" {{#ifEquals mode "roll"}}selected{{/ifEquals}}>Roll</option>
+      <option value="standard" {{#ifEquals mode "standard"}}selected{{/ifEquals}}>Standard Array</option>
+      <option value="pointbuy" {{#ifEquals mode "pointbuy"}}selected{{/ifEquals}}>Point Buy</option>
+    </select>
+  </div>
+
+  <div id="score-table"></div>
+
+  <div class="button-row">
+    <button type="button" id="roll-btn" class="dialog-button">Roll</button>
+    <button type="button" id="reset-btn" class="dialog-button">Reset</button>
+    <button type="button" id="apply-btn" class="dialog-button">Apply</button>
+  </div>
+</div>

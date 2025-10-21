@@ -37,7 +37,6 @@ Put character sheet into edit mode, click the "Assign Abilities" button in the h
 
 ## Future Features
 
-- Upgrade to App v2.
 - Move from header to context menu button.
 
 ## AI Usage

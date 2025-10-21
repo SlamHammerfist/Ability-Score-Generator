@@ -1,10 +1,9 @@
 # Changelog
 
-## [2.1.1] — 2025-10-20
+## [3.0.0] - 2025-10-21
 
-### Fixed
-- Score column width and modifier preview cells now render consistently across modes.
-- Modifier formatting: Ensures consistent +X/-X display across all ability scores.
+### Adedd
+- Rewritten from the ground up to add App v2 support
 
 ## [2.1.0] - 2025-10-20
 
