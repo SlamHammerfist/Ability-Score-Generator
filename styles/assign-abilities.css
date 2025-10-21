@@ -9,6 +9,7 @@
   margin: 0;
 }
 
+/* Button row layout */
 .assign-abilities .button-row {
   margin-top: 0.75em;
   display: grid;
@@ -16,6 +17,17 @@
   gap: 0.5em;
 }
 
+/* When only two buttons are shown */
+.assign-abilities .button-row:has(.wide) {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Optional: make wide buttons fill space */
+.assign-abilities .button-row .wide {
+  width: 100%;
+}
+
+/* Table layout */
 .assign-table {
   width: 100%;
   border-collapse: collapse;
@@ -25,31 +37,70 @@
 .assign-table th,
 .assign-table td {
   padding: 4px 6px;
-  text-align: left;
   vertical-align: middle;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
+/* Header styling */
 .assign-table th {
   font-weight: bold;
   border-bottom: 1px solid var(--color-border-light-tertiary);
 }
 
-.assign-table .mod-preview {
+/* Alignment: headers */
+.assign-table th.ability-header {
+  text-align: left;
+}
+
+.assign-table th.current-header,
+.assign-table th.assign-header,
+.assign-table th.new-header {
+  text-align: center;
+}
+
+.assign-table th.mod-header {
+  text-align: right;
+}
+
+/* Alignment: cells */
+.assign-table td.ability-cell {
+  text-align: left;
+}
+
+.assign-table td.current-score,
+.assign-table td.new-score {
+  text-align: center;
+}
+
+.assign-table td.assign-cell {
+  width: 7em;
+  text-align: center;
+}
+
+.assign-table td.mod-preview {
   text-align: center;
   font-weight: bold;
 }
 
+/* Dropdown styling */
 .assign-table select {
   width: 100%;
   box-sizing: border-box;
 }
 
 .button-row {
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
   gap: 0.5em;
   margin-top: 1em;
+}
+
+.button-row.wide {
+  grid-template-columns: 1fr 1fr;
+}
+
+.button-row #roll-btn.hidden {
+  display: none;
 }
