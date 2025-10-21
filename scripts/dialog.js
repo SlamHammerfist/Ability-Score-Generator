@@ -32,22 +32,8 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
 
   await foundry.applications.api.Dialog.prompt({
     id: "assign-abilities-dialog",
-    title: `Assign Ability Scores — ${name}`,
     content: html,
-    buttons: [
-      {
-        id: "apply",
-        label: "Apply",
-        callback: async () => {
-          const result = await applyScores(actor, dialogRoot, modeRef.value);
-          if (result === "incomplete") {
-            ui.notifications.warn("Please assign a score to every ability before applying.");
-            return false;
-          }
-          return true;
-        }
-      }
-    ],
+    buttons: [], // no native footer
     options: {
       submitOnChange: false,
       closeOnSubmit: false,
@@ -71,6 +57,7 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
       tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore);
       wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore);
 
+      // Roll Again
       dialogRoot.querySelector("#roll-btn")?.addEventListener("click", async () => {
         rolled = await rollAbilityScores(actor);
         modeRef.value = "roll";
@@ -83,6 +70,7 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
         }
       });
 
+      // Reset
       dialogRoot.querySelector("#reset-btn")?.addEventListener("click", async () => {
         const restore = {};
         for (const [abl, val] of Object.entries(originalScores)) {
@@ -92,6 +80,27 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
         ui.notifications.info("Ability scores reset to original values.");
 
         assigned = {};
+        const tableDiv = dialogRoot.querySelector("#score-table");
+        if (tableDiv) {
+          const getCurrentScore = abl => actor.system.abilities?.[abl]?.value ?? 10;
+          const options =
+            modeRef.value === "roll" ? rolled :
+            modeRef.value === "standard" ? STANDARD_ARRAY :
+            modeRef.value === "pointbuy" ? pointBuyScores : [];
+
+          tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore);
+          wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore);
+        }
+      });
+
+      // Apply
+      dialogRoot.querySelector("#apply-btn")?.addEventListener("click", async () => {
+        const result = await applyScores(actor, dialogRoot, modeRef.value);
+        if (result === "incomplete") {
+          ui.notifications.warn("Please assign a score to every ability before applying.");
+          return;
+        }
+
         const tableDiv = dialogRoot.querySelector("#score-table");
         if (tableDiv) {
           const getCurrentScore = abl => actor.system.abilities?.[abl]?.value ?? 10;

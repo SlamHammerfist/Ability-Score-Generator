@@ -104,3 +104,23 @@
 .button-row #roll-btn.hidden {
   display: none;
 }
+
+.dialog-title {
+  font-family: var(--font-primary);
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--color-text-light-heading);
+  margin: 0 0 0.5em 0;
+  padding: 0;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border-light-tertiary);
+  line-height: 1.4;
+}
+
+.dialog-title .actor-name {
+  display: block;
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--color-text-light-secondary);
+  margin-top: 0.25em;
+}
