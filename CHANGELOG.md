@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.0.1] - 2025-10-21
+
+### Added
+- Apply button is disabled after clicking and re-enabled after reset is clicked
+
 ## [3.0.0] - 2025-10-21
 
 ### Added
