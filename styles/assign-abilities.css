@@ -1,0 +1,126 @@
+.assign-abilities .mode-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.assign-abilities #score-table {
+  margin: 0;
+}
+
+/* Button row layout */
+.assign-abilities .button-row {
+  margin-top: 0.75em;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5em;
+}
+
+/* When only two buttons are shown */
+.assign-abilities .button-row:has(.wide) {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Optional: make wide buttons fill space */
+.assign-abilities .button-row .wide {
+  width: 100%;
+}
+
+/* Table layout */
+.assign-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5em;
+}
+
+.assign-table th,
+.assign-table td {
+  padding: 4px 6px;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Header styling */
+.assign-table th {
+  font-weight: bold;
+  border-bottom: 1px solid var(--color-border-light-tertiary);
+}
+
+/* Alignment: headers */
+.assign-table th.ability-header {
+  text-align: left;
+}
+
+.assign-table th.current-header,
+.assign-table th.assign-header,
+.assign-table th.new-header {
+  text-align: center;
+}
+
+.assign-table th.mod-header {
+  text-align: right;
+}
+
+/* Alignment: cells */
+.assign-table td.ability-cell {
+  text-align: left;
+}
+
+.assign-table td.current-score,
+.assign-table td.new-score {
+  text-align: center;
+}
+
+.assign-table td.assign-cell {
+  width: 7em;
+  text-align: center;
+}
+
+.assign-table td.mod-preview {
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Dropdown styling */
+.assign-table select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  gap: 0.5em;
+  margin-top: 1em;
+}
+
+.button-row.wide {
+  grid-template-columns: 1fr 1fr;
+}
+
+.button-row #roll-btn.hidden {
+  display: none;
+}
+
+.dialog-title {
+  font-family: var(--font-primary);
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--color-text-light-heading);
+  margin: 0 0 0.5em 0;
+  padding: 0;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border-light-tertiary);
+  line-height: 1.4;
+}
+
+.dialog-title .actor-name {
+  display: block;
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--color-text-light-secondary);
+  margin-top: 0.25em;
+}

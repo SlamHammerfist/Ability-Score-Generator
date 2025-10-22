@@ -1,10 +1,9 @@
 # Changelog
 
-## [2.1.1] — 2025-10-20
+## [3.0.0] - 2025-10-21
 
-### Fixed
-- Score column width and modifier preview cells now render consistently across modes.
-- Modifier formatting: Ensures consistent +X/-X display across all ability scores.
+### Added
+- Rewritten from the ground up to support App V2
 
 ## [2.1.0] - 2025-10-20
 
@@ -12,13 +11,13 @@
 - Live preview columns for Result and Modifier, calculated from current + assigned scores
 - Current score column injected into assignment table for full context
 - Real-time sync with actor sheet: updates current scores and previews when ability values change
-- Support for dynamic score pooling in roll, array, and point-buy modes
+- Dynamic score pooling in roll, array, and point-buy modes
 - Wider dialog layout for improved readability (800px width)
 
 ### Fixed
 - Rolled scores now populate dropdowns correctly in roll mode
 - Roll button visibility restored on initial render
-- Preview logic now updates correctly after reset or mode switch
+- Preview logic updates correctly after reset or mode switch
 
 ### Improved
 - Table layout and column spacing for better clarity
@@ -33,7 +32,7 @@
 ## [2.0.1] - 2025-10-19
 
 ### Fixed
-- Removed various notes left in code.
+- Removed various leftover notes from code
 
 ## [2.0.0] - 2025-10-18
 
@@ -41,22 +40,21 @@
 - Assign Abilities button injected into DND5E character sheet header
 - Native tooltip support via `data-tooltip` attribute
 - Mode-aware visibility: button only appears in Edit mode
-- Broke ability-dialog.js into multiple pieces for easier editablity
+- Split ability-dialog.js into modular components for easier editing
 
 ### Fixed
-- Tooltip alignment and accessibility with `aria-label`
+- Tooltip alignment and accessibility via `aria-label`
 - Button duplication across multiple renders
 - DOM injection logic to prevent duplicate buttons
-
 
 ### Improved
 - Modular separation of injection logic
 - Logging clarity and error handling
-- Compatibility with DND5e default sheet
-
+- Compatibility with DND5E default sheet
 
 ## [1.0.0] — 2025-10-17
 
+### Added
 - Initial release of Ability Score Generator
 - Roll, Standard Array, and Point Buy modes
 - Dynamic assignment table with modifier previews
