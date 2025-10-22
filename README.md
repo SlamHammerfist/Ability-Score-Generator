@@ -1,4 +1,4 @@
-![Downloads](https://img.shields.io/github/downloads/SlamHammerfist/Ability-Score-Generator/module.zip)
+![Downloads](https://img.shields.io/github/downloads/SlamHammerfist/Ability-Score-Generator/total?label=Downloads&color=blue&style=round)
 ![Foundry Version](https://img.shields.io/badge/FoundryVTT-13%2B-blue?logo=foundryvtt)
 ![Module Version](https://img.shields.io/badge/Version-3.0.0-success)
 ![License](https://img.shields.io/github/license/SlamHammerfist/Ability-Score-Generator)
