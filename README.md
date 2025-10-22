@@ -45,6 +45,7 @@ Click the Assign Abilities button in the header to open the dialog. Choose a gen
 ## 🔮 Future Features
 
 - Move from header to context menu button
+- Visible in edit mode only
 
 ## 🤖 AI Usage
 
