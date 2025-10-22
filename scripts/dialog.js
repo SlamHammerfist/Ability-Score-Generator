@@ -80,6 +80,7 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
         ui.notifications.info("Ability scores reset to original values.");
 
         assigned = {};
+        applyBtn.disabled = false;
         refreshTable();
       });
 
