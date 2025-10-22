@@ -61,7 +61,8 @@ export const applyScores = async (source, dialogRoot, mode) => {
     }
 
     const current = actor.system.abilities?.[abl]?.value ?? 10;
-    const final = current > 10 ? base + (current % 10) : base;
+    const backgroundBonus = current > 10 ? current - 10 : 0;
+    const final = base + backgroundBonus;
     updates[abl] = { value: final };
   }
 

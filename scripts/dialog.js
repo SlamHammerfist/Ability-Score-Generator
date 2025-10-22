@@ -33,7 +33,7 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
   await foundry.applications.api.Dialog.prompt({
     id: "assign-abilities-dialog",
     content: html,
-    buttons: [], // no native footer
+    buttons: [],
     options: {
       submitOnChange: false,
       closeOnSubmit: false,
@@ -57,7 +57,7 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
       tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore);
       wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore);
 
-      // Roll Again
+      // Roll
       dialogRoot.querySelector("#roll-btn")?.addEventListener("click", async () => {
         rolled = await rollAbilityScores(actor);
         modeRef.value = "roll";

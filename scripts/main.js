@@ -6,24 +6,22 @@ Hooks.once("init", () => {
   });
 });
 
-Hooks.on("renderCharacterActorSheet", (sheet, html) => {
+Hooks.on("renderCharacterActorSheet", async (sheet) => {
   const actor = sheet.actor;
   if (actor?.type !== "character") return;
 
-  const $html = $(html);
-  const controls = $html.find(".window-header");
-  if (!controls.length) return;
+  const header = sheet.element.querySelector(".window-header");
+  if (!header) return;
 
   // Remove any existing button to prevent duplicates
-  controls.find(".assign-abilities-btn").remove();
+  header.querySelector(".assign-abilities-btn")?.remove();
 
-  const button = $(`
-    <a class="assign-abilities-btn" data-tooltip="Assign Ability Scores">
-      <i class="fas fa-dice-d20"></i>
-    </a>
-  `);
+  const button = document.createElement("a");
+  button.classList.add("assign-abilities-btn");
+  button.dataset.tooltip = "Assign Ability Scores";
+  button.innerHTML = `<i class="fas fa-dice-d20"></i>`;
 
-  button.on("click", async () => {
+  button.addEventListener("click", async () => {
     try {
       const { openAssignDialog } = await import("./dialog.js");
       const source = actor ?? canvas.tokens?.controlled[0]?.actor;
@@ -38,5 +36,5 @@ Hooks.on("renderCharacterActorSheet", (sheet, html) => {
     }
   });
 
-  controls.append(button);
+  header.appendChild(button);
 });
