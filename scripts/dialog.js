@@ -47,27 +47,27 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
 
       wireModeSelector(dialogRoot, actor, rolled, assigned, modeRef, updateAssigned);
 
-      const tableDiv = dialogRoot.querySelector("#score-table");
-      const getCurrentScore = abl => actor.system.abilities?.[abl]?.value ?? 10;
-      const options =
-        modeRef.value === "roll" ? rolled :
-        modeRef.value === "standard" ? STANDARD_ARRAY :
-        modeRef.value === "pointbuy" ? pointBuyScores : [];
+      const refreshTable = () => {
+        const tableDiv = dialogRoot.querySelector("#score-table");
+        if (!tableDiv) return;
 
-      tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore);
-      wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore);
+        const getCurrentScore = abl => actor.system.abilities?.[abl]?.value ?? 10;
+        const options =
+          modeRef.value === "roll" ? rolled :
+          modeRef.value === "standard" ? STANDARD_ARRAY :
+          modeRef.value === "pointbuy" ? pointBuyScores : [];
+
+        tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore);
+        wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore);
+      };
+
+      refreshTable();
 
       // Roll
       dialogRoot.querySelector("#roll-btn")?.addEventListener("click", async () => {
         rolled = await rollAbilityScores(actor);
         modeRef.value = "roll";
-
-        const tableDiv = dialogRoot.querySelector("#score-table");
-        if (tableDiv) {
-          const getCurrentScore = abl => actor.system.abilities?.[abl]?.value ?? 10;
-          tableDiv.innerHTML = buildTable(actor, rolled, assigned, modeRef.value, getCurrentScore);
-          wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore);
-        }
+        refreshTable();
       });
 
       // Reset
@@ -80,17 +80,7 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
         ui.notifications.info("Ability scores reset to original values.");
 
         assigned = {};
-        const tableDiv = dialogRoot.querySelector("#score-table");
-        if (tableDiv) {
-          const getCurrentScore = abl => actor.system.abilities?.[abl]?.value ?? 10;
-          const options =
-            modeRef.value === "roll" ? rolled :
-            modeRef.value === "standard" ? STANDARD_ARRAY :
-            modeRef.value === "pointbuy" ? pointBuyScores : [];
-
-          tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore);
-          wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore);
-        }
+        refreshTable();
       });
 
       // Apply
@@ -101,17 +91,7 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
           return;
         }
 
-        const tableDiv = dialogRoot.querySelector("#score-table");
-        if (tableDiv) {
-          const getCurrentScore = abl => actor.system.abilities?.[abl]?.value ?? 10;
-          const options =
-            modeRef.value === "roll" ? rolled :
-            modeRef.value === "standard" ? STANDARD_ARRAY :
-            modeRef.value === "pointbuy" ? pointBuyScores : [];
-
-          tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore);
-          wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore);
-        }
+        refreshTable();
       });
     }
   });
