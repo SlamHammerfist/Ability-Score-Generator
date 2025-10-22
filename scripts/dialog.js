@@ -45,9 +45,11 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
       dialogRoot = document.querySelector("#assign-abilities-dialog");
       if (!dialogRoot) return;
 
-      wireModeSelector(dialogRoot, actor, rolled, assigned, modeRef, updateAssigned);
+      wireModeSelector(dialogRoot, actor, rolled, assigned, modeRef, updateAssigned, originalScores);
 
-      const refreshTable = () => {
+      const applyBtn = dialogRoot.querySelector("#apply-btn");
+
+      const refreshTable = (originalOverride = originalScores) => {
         const tableDiv = dialogRoot.querySelector("#score-table");
         if (!tableDiv) return;
 
@@ -57,8 +59,8 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
           modeRef.value === "standard" ? STANDARD_ARRAY :
           modeRef.value === "pointbuy" ? pointBuyScores : [];
 
-        tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore);
-        wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore);
+        tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore, originalOverride);
+        wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore, originalOverride);
       };
 
       refreshTable();
@@ -85,14 +87,17 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
       });
 
       // Apply
-      dialogRoot.querySelector("#apply-btn")?.addEventListener("click", async () => {
+      applyBtn?.addEventListener("click", async () => {
+        applyBtn.disabled = true;
+
         const result = await applyScores(actor, dialogRoot, modeRef.value);
         if (result === "incomplete") {
           ui.notifications.warn("Please assign a score to every ability before applying.");
+          applyBtn.disabled = false;
           return;
         }
 
-        refreshTable();
+        refreshTable(originalScores);
       });
     }
   });
