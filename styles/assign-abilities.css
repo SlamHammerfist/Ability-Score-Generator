@@ -19,6 +19,10 @@
   cursor: pointer !important;
 }
 
+.application.sheet:not(.editable) .assign-abilities-btn {
+  display: none !important;
+}
+
 /* ────────────────────────────────────────────── */
 /* Assign Abilities Dialog: Mode Selector Layout */
 /* ────────────────────────────────────────────── */
