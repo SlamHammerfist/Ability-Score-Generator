@@ -1,5 +1,5 @@
 import { buildTable, wireDropdowns, wireModeSelector } from "./table.js";
-import { pointBuyScores, STANDARD_ARRAY, applyScores, rollAbilityScores } from "./utils.js";
+import { pointBuyScores, STANDARD_ARRAY, assignScores, rollAbilityScores } from "./utils.js";
 
 export const openAssignDialog = async (source, initialRolled = [], mode = "roll", preservedPosition = undefined) => {
   const actor = source?.actor ?? (source?.type === "character" ? source : null);
@@ -12,6 +12,7 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
   let rolled = initialRolled;
   let assigned = {};
   const modeRef = { value: mode };
+  const lockedRef = { value: false };
   let dialogRoot;
 
   const updateAssigned = (a) => { assigned = a; };
@@ -33,7 +34,14 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
   await foundry.applications.api.Dialog.prompt({
     id: "assign-abilities-dialog",
     content: html,
-    buttons: [],
+    buttons: [
+      {
+        label: "Save & Close",
+        value: null,
+        type: "submit",
+        action: "ok"
+      }
+    ],
     window: {
       title: `Assign Abilities - ${name}`
     },
@@ -48,11 +56,12 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
       dialogRoot = document.querySelector("#assign-abilities-dialog");
       if (!dialogRoot) return;
 
-      wireModeSelector(dialogRoot, actor, rolled, assigned, modeRef, updateAssigned, originalScores);
+      wireModeSelector(dialogRoot, actor, rolled, assigned, modeRef, updateAssigned, originalScores, lockedRef);
 
-      const applyBtn = dialogRoot.querySelector("#apply-btn");
+      const assignBtn = dialogRoot.querySelector("#assign-btn");
+      const rollBtn = dialogRoot.querySelector("#roll-btn");
 
-      const refreshTable = (originalOverride = originalScores) => {
+      const refreshTable = (originalOverride = originalScores, lockState = lockedRef.value) => {
         const tableDiv = dialogRoot.querySelector("#score-table");
         if (!tableDiv) return;
 
@@ -62,17 +71,17 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
           modeRef.value === "standard" ? STANDARD_ARRAY :
           modeRef.value === "pointbuy" ? pointBuyScores : [];
 
-        tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore, originalOverride);
-        wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore, originalOverride);
+        tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore, originalOverride, lockState);
+        wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore, originalOverride, lockState);
       };
 
       refreshTable();
 
       // Roll
-      dialogRoot.querySelector("#roll-btn")?.addEventListener("click", async () => {
+      rollBtn?.addEventListener("click", async () => {
         rolled = await rollAbilityScores(actor);
         modeRef.value = "roll";
-        refreshTable();
+        refreshTable(originalScores, lockedRef.value);
       });
 
       // Reset
@@ -85,22 +94,33 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
         ui.notifications.info("Ability scores reset to original values.");
 
         assigned = {};
-        applyBtn.disabled = false;
-        refreshTable();
+        assignBtn.disabled = false;
+        if (rollBtn) rollBtn.disabled = false;
+        lockedRef.value = false;
+        refreshTable(originalScores, lockedRef.value);
       });
 
-      // Apply
-      applyBtn?.addEventListener("click", async () => {
-        applyBtn.disabled = true;
+      // Assign
+      assignBtn?.addEventListener("click", async () => {
+        assignBtn.disabled = true;
 
-        const result = await applyScores(actor, dialogRoot, modeRef.value);
+        const result = await assignScores(actor, dialogRoot, modeRef.value);
+
         if (result === "incomplete") {
-          ui.notifications.warn("Please assign a score to every ability before applying.");
-          applyBtn.disabled = false;
+          ui.notifications.warn("Please assign a score to every ability.");
+          assignBtn.disabled = false;
           return;
         }
 
-        refreshTable(originalScores);
+        if (result === "cancelled") {
+          assignBtn.disabled = false;
+          return;
+        }
+
+        lockedRef.value = true;
+        if (rollBtn) rollBtn.disabled = true;
+        assigned = {};
+        refreshTable(originalScores, lockedRef.value);
       });
     }
   });
