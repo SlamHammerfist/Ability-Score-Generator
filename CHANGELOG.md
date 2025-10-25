@@ -3,6 +3,8 @@
 ## [3.1.1] - 2025-10-25
 
 ### Fixed
+- Changed Apply button to Assign
+- Changed Submit button to Close & Save
 - Roll button and assign dropdowns are now disabled after assignment and re-enabled on reset
 - Code clean-up
 
