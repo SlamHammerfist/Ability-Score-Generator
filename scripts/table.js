@@ -1,16 +1,20 @@
 import { modifier, pointBuyCost, pointBuyScores, STANDARD_ARRAY } from "./utils.js";
 
 // Build the ability score assignment table
-export const buildTable = (source, options = [], assigned = {}, mode = "roll", getCurrentScore, originalScores = {}) => {
+export const buildTable = (
+  source,
+  options = [],
+  assigned = {},
+  mode = "roll",
+  getCurrentScore,
+  originalScores = {},
+  locked = false
+) => {
   const actor = source?.actor ?? source;
   const abilities = Object.keys(actor.system.abilities);
   const fallbackLabels = {
-    str: "Strength",
-    dex: "Dexterity",
-    con: "Constitution",
-    int: "Intelligence",
-    wis: "Wisdom",
-    cha: "Charisma"
+    str: "Strength", dex: "Dexterity", con: "Constitution",
+    int: "Intelligence", wis: "Wisdom", cha: "Charisma"
   };
 
   const labels = abilities.map(abl => {
@@ -43,21 +47,21 @@ export const buildTable = (source, options = [], assigned = {}, mode = "roll", g
       ? getCurrentScore(abl)
       : actor.system.abilities?.[abl]?.value ?? 10;
     const original = originalScores[abl] ?? current;
-    const currentDisplay = current !== original
-      ? `${current} (${original})`
-      : `${current}`;
+    const currentDisplay = current !== original ? `${current} (${original})` : `${current}`;
 
     const selected = assigned[abl];
     const newScore = Number.isInteger(selected)
       ? selected + (current > 10 ? current - 10 : 0)
       : selected;
-    const mod = Number.isInteger(newScore) ? modifier(newScore) : "";
+    const mod = Number.isInteger(newScore)
+      ? modifier(newScore)
+      : modifier(current);
 
     html += `<tr>
       <td class="ability-cell">${label}</td>
       <td class="current-score">${currentDisplay}</td>
       <td class="assign-cell">
-        <select name="${abl}">
+        <select name="${abl}" class="assign-select" ${locked ? "disabled" : ""}>
           <option value=""></option>
           ${options.map(score => {
             const label = mode === "pointbuy"
@@ -78,7 +82,19 @@ export const buildTable = (source, options = [], assigned = {}, mode = "roll", g
 };
 
 // Wire dropdowns and update scores/modifiers
-export function wireDropdowns(tableDiv, source, assigned, mode, updateAssigned, rolled = [], getCurrentScore, originalScores = {}) {
+export function wireDropdowns(
+  tableDiv,
+  source,
+  assigned,
+  mode,
+  updateAssigned,
+  rolled = [],
+  getCurrentScore,
+  originalScores = {},
+  locked = false
+) {
+  if (locked) return;
+
   const actor = source?.actor ?? source;
   const abilities = Object.keys(actor.system.abilities || {});
   const selects = abilities.map(abl => tableDiv.querySelector(`select[name="${abl}"]`));
@@ -157,21 +173,30 @@ export function wireDropdowns(tableDiv, source, assigned, mode, updateAssigned, 
 
       currentScoreCells[i].innerText = currentDisplay;
       newScoreCells[i].innerText = isNaN(newScore) ? "" : newScore;
-      modCells[i].innerText = isNaN(newScore) ? "" : modifier(newScore);
+      modCells[i].innerText = isNaN(newScore)
+        ? modifier(currentScore)
+        : modifier(newScore);
     });
   };
 
   selects.forEach(select => {
-    select.addEventListener("change", () => {
-      updateDropdowns();
-    });
+    select.addEventListener("change", updateDropdowns);
   });
 
   updateDropdowns();
 }
 
 // Wire mode selector and rebuild table
-export function wireModeSelector(root, source, rolled, assigned, modeRef, updateAssigned, originalScores = {}) {
+export function wireModeSelector(
+  root,
+  source,
+  rolled,
+  assigned,
+  modeRef,
+  updateAssigned,
+  originalScores = {},
+  lockedRef = { value: false }
+) {
   const actor = source?.actor ?? source;
   const modeSelect = root.querySelector("#mode-select");
   if (!modeSelect) return;
@@ -188,8 +213,10 @@ export function wireModeSelector(root, source, rolled, assigned, modeRef, update
       modeRef.value === "standard" ? STANDARD_ARRAY :
       modeRef.value === "pointbuy" ? pointBuyScores : [];
 
-    tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore, originalScores);
-    wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore, originalScores);
+    const locked = lockedRef?.value ?? false;
+
+    tableDiv.innerHTML = buildTable(actor, options, assigned, modeRef.value, getCurrentScore, originalScores, locked);
+    wireDropdowns(tableDiv, actor, assigned, modeRef.value, updateAssigned, rolled, getCurrentScore, originalScores, locked);
 
     const rollBtn = root.querySelector("#roll-btn");
     const buttonRow = root.querySelector("#assign-buttons");
