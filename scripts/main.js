@@ -1,3 +1,5 @@
+import { openAssignDialog } from "./dialog.js";
+
 Hooks.once("init", () => {
   console.log("Assign Abilities | Initializing module");
 
@@ -23,7 +25,6 @@ Hooks.on("renderCharacterActorSheet", async (sheet) => {
 
   button.addEventListener("click", async () => {
     try {
-      const { openAssignDialog } = await import("./dialog.js");
       const source = actor ?? canvas.tokens?.controlled[0]?.actor;
       if (!source) {
         ui.notifications.error("No valid actor or token selected.");
@@ -36,5 +37,5 @@ Hooks.on("renderCharacterActorSheet", async (sheet) => {
     }
   });
 
-  header.appendChild(button);
+  header.insertBefore(button, header.firstChild.nextSibling);
 });

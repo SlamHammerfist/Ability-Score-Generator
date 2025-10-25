@@ -1,61 +1,72 @@
-.assign-abilities .mode-row {
-  display: flex;
+/* ────────────────────────────────────────────── */
+/* Assign Abilities Button (Header Injection) */
+/* ────────────────────────────────────────────── */
+.assign-abilities-btn {
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  border-radius: 4px;
+  color: var(--color-text-light-heading) !important;
+  display: inline-flex !important;
+  height: 20px;
+  justify-content: center;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  width: 20px;
+}
+
+.assign-abilities-btn:hover {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 0 4px 1px #973634 !important;
+  cursor: pointer !important;
+}
+
+/* ────────────────────────────────────────────── */
+/* Assign Abilities Dialog: Mode Selector Layout */
+/* ────────────────────────────────────────────── */
+.assign-abilities .mode-row {
+  align-items: center;
+  display: flex;
   gap: 0.5em;
-  margin-bottom: 0.5em;
+  margin: 0 auto 1em auto;
+  width: 50%;
 }
 
-.assign-abilities #score-table {
-  margin: 0;
-}
-
-/* Button row layout */
-.assign-abilities .button-row {
-  margin-top: 0.75em;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5em;
-}
-
-/* When only two buttons are shown */
-.assign-abilities .button-row:has(.wide) {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-/* Optional: make wide buttons fill space */
-.assign-abilities .button-row .wide {
+/* ────────────────────────────────────────────── */
+/* Assign Table: Dropdown Styling */
+/* ────────────────────────────────────────────── */
+.assign-table select {
+  box-sizing: border-box;
   width: 100%;
 }
 
-/* Table layout */
+/* ────────────────────────────────────────────── */
+/* Assign Table: Structure and Cell Formatting */
+/* ────────────────────────────────────────────── */
 .assign-table {
-  width: 100%;
   border-collapse: collapse;
   margin-top: 0.5em;
+  width: 100%;
 }
 
-.assign-table th,
-.assign-table td {
+.assign-table td,
+.assign-table th {
   padding: 4px 6px;
   vertical-align: middle;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-/* Header styling */
+/* ────────────────────────────────────────────── */
+/* Assign Table: Header Alignment */
+/* ────────────────────────────────────────────── */
 .assign-table th {
-  font-weight: bold;
   border-bottom: 1px solid var(--color-border-light-tertiary);
+  font-weight: bold;
 }
 
-/* Alignment: headers */
 .assign-table th.ability-header {
   text-align: left;
 }
 
-.assign-table th.current-header,
 .assign-table th.assign-header,
+.assign-table th.current-header,
 .assign-table th.new-header {
   text-align: center;
 }
@@ -64,9 +75,16 @@
   text-align: right;
 }
 
-/* Alignment: cells */
+/* ────────────────────────────────────────────── */
+/* Assign Table: Cell Alignment */
+/* ────────────────────────────────────────────── */
 .assign-table td.ability-cell {
   text-align: left;
+}
+
+.assign-table td.assign-cell {
+  text-align: center;
+  width: 7em;
 }
 
 .assign-table td.current-score,
@@ -74,53 +92,48 @@
   text-align: center;
 }
 
-.assign-table td.assign-cell {
-  width: 7em;
-  text-align: center;
-}
-
 .assign-table td.mod-preview {
-  text-align: center;
   font-weight: bold;
+  text-align: center;
 }
 
-/* Dropdown styling */
-.assign-table select {
-  width: 100%;
-  box-sizing: border-box;
-}
-
+/* ────────────────────────────────────────────── */
+/* Button Row Layout */
+/* ────────────────────────────────────────────── */
 .button-row {
   display: grid;
-  grid-template-columns: auto 1fr 1fr;
   gap: 0.5em;
-  margin-top: 1em;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 0.75em;
 }
 
 .button-row.wide {
   grid-template-columns: 1fr 1fr;
 }
 
-.button-row #roll-btn.hidden {
-  display: none;
+.button-row button {
+  height: 40px;
 }
 
+/* ────────────────────────────────────────────── */
+/* Dialog Title and Actor Name Styling */
+/* ────────────────────────────────────────────── */
 .dialog-title {
+  border-bottom: 2px solid var(--color-border-light-tertiary);
+  color: var(--color-text-light-heading);
   font-family: var(--font-primary);
   font-size: 1.25rem;
   font-weight: bold;
-  color: var(--color-text-light-heading);
-  margin: 0 0 0.5em 0;
+  line-height: 1.8;
+  margin: 0;
   padding: 0;
   text-align: center;
-  border-bottom: 1px solid var(--color-border-light-tertiary);
-  line-height: 1.4;
 }
 
 .dialog-title .actor-name {
+  color: var(--color-text-light-secondary);
   display: block;
   font-size: 1rem;
   font-weight: normal;
-  color: var(--color-text-light-secondary);
   margin-top: 0.25em;
 }

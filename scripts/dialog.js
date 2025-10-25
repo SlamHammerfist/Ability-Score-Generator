@@ -34,6 +34,9 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
     id: "assign-abilities-dialog",
     content: html,
     buttons: [],
+    window: {
+      title: `Assign Abilities - ${name}`
+    },
     options: {
       submitOnChange: false,
       closeOnSubmit: false,
