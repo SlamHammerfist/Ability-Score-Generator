@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.1.1] - 2025-10-25
+
+### Fixed
+- Roll button and assign dropdowns are now disabled after assignment and re-enabled on reset
+- Code clean-up
+
 ## [3.1.0] - 2025-10-24
 
 ### Added
