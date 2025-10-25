@@ -46,7 +46,6 @@ Click the Assign Abilities button in the header to open the dialog. Choose a gen
 
 - Move from header to context menu button
 - Visible in edit mode only
-- Move title to the header
 
 ## 🤖 AI Usage
 

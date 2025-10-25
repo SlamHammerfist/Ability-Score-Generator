@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.1.0] - 2025-10-24
+
+### Added
+- Added a title to the header, including the name of the actor that the score is being assigned to
+
+### Improved
+- Cleaned up and sorted css
+
 ## [3.0.1] - 2025-10-21
 
 ### Added
