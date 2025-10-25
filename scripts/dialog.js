@@ -95,7 +95,7 @@ export const openAssignDialog = async (source, initialRolled = [], mode = "roll"
 
         assigned = {};
         assignBtn.disabled = false;
-        if (rollBtn) rollBtn.disabled = false;
+        if (rollBtn) rollBtn.disabled = true;
         lockedRef.value = false;
         refreshTable(originalScores, lockedRef.value);
       });

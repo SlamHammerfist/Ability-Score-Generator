@@ -39,8 +39,8 @@ export async function rollAbilityScores(actor) {
   return rolledScores;
 }
 
-// --- Apply scores to actor ---
-export const applyScores = async (source, dialogRoot, mode) => {
+// --- Assign scores to actor ---
+export const assignScores = async (source, dialogRoot, mode) => {
   const actor = source?.actor ?? source;
   if (!actor?.system?.abilities) return "invalid";
 
@@ -71,7 +71,7 @@ export const applyScores = async (source, dialogRoot, mode) => {
   if (mode === "pointbuy" && totalCost < 27) {
     const confirmed = await foundry.applications.api.Dialog.confirm({
       title: "Unspent Points",
-      content: `<p>You have <strong>${27 - totalCost}</strong> unspent point-buy points. Are you sure you want to apply?</p>`,
+      content: `<p>You have <strong>${27 - totalCost}</strong> unspent point-buy points. Are you sure you want to assign?</p>`,
       options: {
         width: 400,
         classes: ["assign-abilities-confirm"]
