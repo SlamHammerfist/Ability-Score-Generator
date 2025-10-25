@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.2.0]
+
+### Added
+- The ability assignment button now appears only in Edit Mode 
+
 ## [3.1.1] - 2025-10-25
 
 ### Fixed
