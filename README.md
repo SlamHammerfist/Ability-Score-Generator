@@ -41,12 +41,11 @@ A modular, native-feeling ability score assignment tool for FoundryVTT and the D
 
 ## 🕹️ Usage
 
-Click the Assign Abilities button in the header to open the dialog. Choose a generation mode, assign scores, and click Apply.
+Put sheet into edit mode. Click the Assign Abilities button in the header to open the dialog. Choose a generation mode, assign scores, and click Save & Close.
 
 ## 🔮 Future Features
 
 - Move from header to context menu button
-- Visible in edit mode only
 
 ## 🤖 AI Usage
 
