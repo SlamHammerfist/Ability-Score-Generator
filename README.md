@@ -24,7 +24,7 @@ A modular, native-feeling ability score assignment tool for FoundryVTT and the D
 
 - FoundryVTT 13+
 - DND5e 5.x.x
-
+- Dice so Nice
 ---
 
 ## 📦 Installation
